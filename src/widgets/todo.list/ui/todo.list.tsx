@@ -1,48 +1,62 @@
 import { SingleTodo, type SingleTodoType } from "@/entities/single.todo";
-import { FILTER_TABS, type FilterTabsType } from "@/entities/todos.filter.tab";
-import TodosFilterTab from "@/entities/todos.filter.tab/ui/todos.filter.tab";
 import { TodosLeftCount } from "@/entities/todos.left.count";
 import { AddSingleTodo } from "@/features/add.single.todo";
 import { ClearCompletedTodos } from "@/features/clear.todos";
 import { useState } from "react";
+import { TodosFilter } from "@/features/filter.todos";
+import type { FilterTabsType } from "@/entities/todos.filter.tab";
 
 const TodoList = () => {
   const [todos, setTodos] = useState<SingleTodoType[]>([]);
+  const [activeTab, setActiveTab] = useState<FilterTabsType>("all");
 
-  const addTodo = () => {
-    return;
+  const filteredTodos =
+    activeTab === "all"
+      ? todos
+      : todos.filter(({ isDone }) => {
+          return activeTab === "active" ? !isDone : isDone;
+        });
+
+  const itemsLeftCount = filteredTodos.length;
+
+  const isClearCompletedDisabled =
+    !filteredTodos.length || !filteredTodos.some((todo) => todo.isDone);
+
+  const addTodoHandler = (newTodoTitle: string) => {
+    const newTodo: SingleTodoType = {
+      id: Date.now(),
+      title: newTodoTitle,
+      isDone: false,
+    };
+
+    setTodos((prev) => [newTodo, ...prev]);
   };
 
-  const clearTodos = () => {
-    return;
+  const clearTodosHandler = () => {
+    setTodos((prev) => prev.filter((todo) => todo.isDone));
   };
 
-  const onFilterHandler = () => {
-    return;
+  const onFilterHandler = (tabKey: FilterTabsType) => {
+    setActiveTab(tabKey);
   };
 
   return (
-    <div>
-      <AddSingleTodo addTodo={addTodo} />
+    <div className="container max-w-lg bg-white p-4 shadow-md">
+      <AddSingleTodo addTodo={addTodoHandler} />
 
-      {todos.map(({ id, title, isDone }) => (
+      {filteredTodos.map(({ id, title, isDone }) => (
         <SingleTodo key={id} title={title} isDone={isDone} />
       ))}
 
-      <div>
-        <TodosLeftCount count={2} />
+      <div className="flex items-center justify-between text-muted font-thin">
+        <TodosLeftCount count={itemsLeftCount} />
 
-        {Object.keys(FILTER_TABS).map((tabKey, index) => {
-          return (
-            <TodosFilterTab
-              key={`${tabKey}${index}`}
-              tabKey={tabKey as FilterTabsType}
-              callback={onFilterHandler}
-            />
-          );
-        })}
+        <TodosFilter activeTab={activeTab} onFilterCallback={onFilterHandler} />
 
-        <ClearCompletedTodos clearTodos={clearTodos} />
+        <ClearCompletedTodos
+          clearTodos={clearTodosHandler}
+          disabled={isClearCompletedDisabled}
+        />
       </div>
     </div>
   );
