@@ -24,11 +24,17 @@ const AddSingleTodo = (props: AddSingleTodoProps) => {
 
     if (isEnterKey) {
       addTodo(value);
+      setValue("");
     }
   };
 
   return (
-    <Input value={value} onChange={onChangeHandler} onKeyUp={onEnterHandler} />
+    <Input
+      value={value}
+      onChange={onChangeHandler}
+      onKeyUp={onEnterHandler}
+      maxLength={80}
+    />
   );
 };
 
