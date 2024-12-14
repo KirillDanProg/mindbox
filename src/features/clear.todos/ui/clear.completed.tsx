@@ -1,17 +1,22 @@
 import { Button } from "@/shared/components/ui/button";
 
-type ClearCompletedTodosProps = {
+type ClearTodosProps = {
+  disabled: boolean;
   clearTodos: () => void;
 };
 
-const ClearCompletedTodos = (props: ClearCompletedTodosProps) => {
-  const { clearTodos } = props;
+const ClearCompletedTodos = (props: ClearTodosProps) => {
+  const { disabled, clearTodos } = props;
 
   const onClearHandler = () => {
     clearTodos();
   };
 
-  return <Button onClick={onClearHandler}>Clear completed</Button>;
+  return (
+    <Button variant="ghost" disabled={disabled} onClick={onClearHandler}>
+      Clear completed
+    </Button>
+  );
 };
 
 export default ClearCompletedTodos;
