@@ -1,3 +1,11 @@
+/**
+ * Пример:
+ * ```
+ * const title = transformTitle("test title");
+ * console.log(title); // "Test title"
+ * ```
+ */
+
 export const transformTitle = (title: string) => {
   const trimmedTitle = title.trim();
 
