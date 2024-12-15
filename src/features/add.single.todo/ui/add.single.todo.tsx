@@ -31,9 +31,11 @@ const AddSingleTodo = (props: AddSingleTodoProps) => {
   return (
     <Input
       value={value}
+      placeholder="What needs to be done?"
       onChange={onChangeHandler}
       onKeyUp={onEnterHandler}
       maxLength={80}
+      className="border-none rounded-none italic md:text-xl font-thin"
       data-testid="add-todo-input"
     />
   );

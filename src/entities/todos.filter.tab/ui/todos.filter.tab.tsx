@@ -19,7 +19,7 @@ const TodosFilterTab = (props: TodosFilterTabProps) => {
     <div
       onClick={onClickHandler}
       className={`cursor-pointer px-2 rounded-sm border ${
-        isActive ? "border-red-100" : "border-transparent"
+        isActive ? "border-gray-400" : "border-transparent"
       } `}
       data-testid={`tab-${FILTER_TABS[tabKey]}`}
     >{`${FILTER_TABS[tabKey]}`}</div>

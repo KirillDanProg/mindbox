@@ -13,7 +13,12 @@ const ClearCompletedTodos = (props: ClearTodosProps) => {
   };
 
   return (
-    <Button variant="ghost" disabled={disabled} onClick={onClearHandler}>
+    <Button
+      variant="unstyled"
+      className="p-0"
+      disabled={disabled}
+      onClick={onClearHandler}
+    >
       Clear completed
     </Button>
   );

@@ -59,20 +59,21 @@ const TodoList = (props: TodoListProps) => {
 
   return (
     <div
-      className="container flex flex-col max-w-lg bg-white p-4 shadow-md gap-4"
+      className="container flex flex-col max-w-lg bg-white shadow-md"
       data-testid="todo-list"
     >
       <AddSingleTodo addTodo={addTodoHandler} />
 
-      {filteredTodos.map((todo) => (
-        <SingleTodo
-          key={todo.id}
-          todo={todo}
-          onCompletedChange={onCompletedHandler}
-        />
-      ))}
-
-      <div className="flex flex-col sm:flex-row items-center justify-between text-muted font-thin">
+      <div>
+        {filteredTodos.map((todo) => (
+          <SingleTodo
+            key={todo.id}
+            todo={todo}
+            onCompletedChange={onCompletedHandler}
+          />
+        ))}
+      </div>
+      <div className="flex flex-col sm:flex-row items-center justify-between text-muted font-thin py-1 px-2">
         <TodosLeftCount count={itemsLeftCount} />
 
         <TodosFilter activeTab={activeTab} onFilterCallback={onFilterHandler} />
