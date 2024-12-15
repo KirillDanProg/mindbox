@@ -6,7 +6,7 @@ export const transformTitle = (title: string) => {
   }
 
   const lowerCaseTitle = trimmedTitle.toLowerCase();
-  const capitilized = lowerCaseTitle[0].toUpperCase() + lowerCaseTitle.slice(1);
+  const capitalized = lowerCaseTitle[0].toUpperCase() + lowerCaseTitle.slice(1);
 
-  return capitilized;
+  return capitalized;
 };

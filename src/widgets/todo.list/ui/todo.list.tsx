@@ -5,6 +5,8 @@ import { ClearCompletedTodos } from "@/features/clear.todos";
 import { useState } from "react";
 import { TodosFilter } from "@/features/filter.todos";
 import type { FilterTabsType } from "@/entities/todos.filter.tab";
+import { transformTitle } from "@/shared/lib/utils/transform.title";
+import { mapTodos } from "../lib/utils/map.todos";
 
 const TodoList = () => {
   const [todos, setTodos] = useState<SingleTodoType[]>([]);
@@ -23,9 +25,15 @@ const TodoList = () => {
     !filteredTodos.length || !filteredTodos.some((todo) => todo.isDone);
 
   const addTodoHandler = (newTodoTitle: string) => {
+    const transformedTitle = transformTitle(newTodoTitle);
+
+    if (!transformedTitle) {
+      return;
+    }
+
     const newTodo: SingleTodoType = {
       id: Date.now(),
-      title: newTodoTitle,
+      title: transformedTitle,
       isDone: false,
     };
 
