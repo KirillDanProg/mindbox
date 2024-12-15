@@ -34,6 +34,7 @@ const AddSingleTodo = (props: AddSingleTodoProps) => {
       onChange={onChangeHandler}
       onKeyUp={onEnterHandler}
       maxLength={80}
+      data-testid="add-todo-input"
     />
   );
 };

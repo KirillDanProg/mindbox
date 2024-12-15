@@ -5,11 +5,17 @@ import { ClearCompletedTodos } from "@/features/clear.todos";
 import { useState } from "react";
 import { TodosFilter } from "@/features/filter.todos";
 import type { FilterTabsType } from "@/entities/todos.filter.tab";
-import { transformTitle } from "@/shared/lib/utils/transform.title";
+import { transformTitle } from "@/shared/lib/utils/transform.title/transform.title";
 import { mapTodos } from "../lib/utils/map.todos";
 
-const TodoList = () => {
-  const [todos, setTodos] = useState<SingleTodoType[]>([]);
+type TodoListProps = {
+  initTodos?: SingleTodoType[];
+};
+
+const TodoList = (props: TodoListProps) => {
+  const { initTodos = [] } = props;
+
+  const [todos, setTodos] = useState(initTodos);
   const [activeTab, setActiveTab] = useState<FilterTabsType>("all");
 
   const filteredTodos =
@@ -52,7 +58,10 @@ const TodoList = () => {
   };
 
   return (
-    <div className="container flex flex-col max-w-lg bg-white p-4 shadow-md gap-4">
+    <div
+      className="container flex flex-col max-w-lg bg-white p-4 shadow-md gap-4"
+      data-testid="todo-list"
+    >
       <AddSingleTodo addTodo={addTodoHandler} />
 
       {filteredTodos.map((todo) => (

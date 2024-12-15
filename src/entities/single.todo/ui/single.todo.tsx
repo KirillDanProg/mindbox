@@ -12,7 +12,10 @@ const SingleTodo = (props: SingleTodoProps) => {
   const { id, title, isDone } = todo;
 
   return (
-    <label className="flex items-center gap-2 cursor-pointer">
+    <label
+      className="flex items-center gap-2 cursor-pointer"
+      data-testid={`single-todo-${id}`}
+    >
       <Checkbox
         checked={isDone}
         onCheckedChange={() => {
