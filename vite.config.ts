@@ -30,7 +30,12 @@ export default defineConfig((env) => {
         reportsDirectory: "coverage",
         provider: "v8",
         include: ["src/**/*"],
-        exclude: ["**/index.{ts,tsx}", "**/const/**", "**/types/**"],
+        exclude: [
+          "**/index.{ts,tsx}",
+          "**/const/**",
+          "**/types/**",
+          "**/*.{spec,test}.{ts,tsx}",
+        ],
       },
       globals: true,
       setupFiles: "./setup.tests.ts",
