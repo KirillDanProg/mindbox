@@ -20,7 +20,6 @@ const TodoList = () => {
         });
 
   const itemsLeftCount = filteredTodos.length;
-
   const isClearCompletedDisabled =
     !filteredTodos.length || !filteredTodos.some((todo) => todo.isDone);
 
@@ -40,8 +39,12 @@ const TodoList = () => {
     setTodos((prev) => [newTodo, ...prev]);
   };
 
+  const onCompletedHandler = (todoId: number) => {
+    setTodos((prev) => mapTodos(todoId, prev));
+  };
+
   const clearTodosHandler = () => {
-    setTodos((prev) => prev.filter((todo) => todo.isDone));
+    setTodos((prev) => prev.filter((todo) => !todo.isDone));
   };
 
   const onFilterHandler = (tabKey: FilterTabsType) => {
@@ -49,14 +52,18 @@ const TodoList = () => {
   };
 
   return (
-    <div className="container max-w-lg bg-white p-4 shadow-md">
+    <div className="container flex flex-col max-w-lg bg-white p-4 shadow-md gap-4">
       <AddSingleTodo addTodo={addTodoHandler} />
 
-      {filteredTodos.map(({ id, title, isDone }) => (
-        <SingleTodo key={id} title={title} isDone={isDone} />
+      {filteredTodos.map((todo) => (
+        <SingleTodo
+          key={todo.id}
+          todo={todo}
+          onCompletedChange={onCompletedHandler}
+        />
       ))}
 
-      <div className="flex items-center justify-between text-muted font-thin">
+      <div className="flex flex-col sm:flex-row items-center justify-between text-muted font-thin">
         <TodosLeftCount count={itemsLeftCount} />
 
         <TodosFilter activeTab={activeTab} onFilterCallback={onFilterHandler} />
