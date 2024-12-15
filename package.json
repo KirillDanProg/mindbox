@@ -1,8 +1,12 @@
 {
   "name": "mindbox",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "author": {
+    "name": "Kirill Vychuzhanin",
+    "email": "kirill2898v@gmail.com"
+  },
   "scripts": {
     "start": "vite",
     "build": "tsc -b && vite build",
