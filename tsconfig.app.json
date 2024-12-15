@@ -1,4 +1,5 @@
 {
+  "types": ["node", "@testing-library/jest-dom", "vitest", "vite/client"],
   "compilerOptions": {
     "rootDir": ".",
 
@@ -27,7 +28,7 @@
       "@/*": ["./src/*"]
     }
   },
-  "files": ["vite.config.ts"],
+  "files": ["vite.config.ts", "setup.tests.ts"],
   "include": ["src"],
   "exclude": ["node_modules"]
 }
