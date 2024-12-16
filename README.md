@@ -18,5 +18,7 @@ Generage v8 test coverage directory in root of the project
 
 Builds the app for production to the `build` folder.\
 
+### App implemented based on FSD architecture 
+
 - Type todo title and press Enter to add new todo.
 - Test coverage up to 80% functionality
