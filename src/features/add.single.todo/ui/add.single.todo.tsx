@@ -35,7 +35,7 @@ const AddSingleTodo = (props: AddSingleTodoProps) => {
       onChange={onChangeHandler}
       onKeyUp={onEnterHandler}
       maxLength={80}
-      className="border-none rounded-none italic md:text-xl font-thin"
+      className="h-12 border-none rounded-none italic md:text-xl font-thin"
       data-testid="add-todo-input"
     />
   );
