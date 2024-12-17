@@ -5,9 +5,7 @@ import { ClearCompletedTodos } from "@/features/clear.todos";
 import { useState } from "react";
 import { TodosFilter } from "@/features/filter.todos";
 import type { FilterTabsType } from "@/entities/todos.filter.tab";
-import { transformTitle } from "@/shared/lib/utils/transform.title/transform.title";
-import { mapTodos } from "../lib/utils/map.todos";
-import { enqueueSnackbar } from "notistack";
+import { useTodos } from "../lib/hooks/use.todos";
 
 type TodoListProps = {
   initTodos?: SingleTodoType[];
@@ -16,7 +14,8 @@ type TodoListProps = {
 const TodoList = (props: TodoListProps) => {
   const { initTodos = [] } = props;
 
-  const [todos, setTodos] = useState(initTodos);
+  const { todos, addTodoHandler, onCompletedHandler, clearTodosHandler } = useTodos(initTodos);
+
   const [activeTab, setActiveTab] = useState<FilterTabsType>("all");
 
   const filteredTodos =
@@ -27,40 +26,7 @@ const TodoList = (props: TodoListProps) => {
         });
 
   const itemsLeftCount = filteredTodos.length;
-  const isClearCompletedDisabled =
-    !filteredTodos.length || !filteredTodos.some((todo) => todo.isDone);
-
-  const addTodoHandler = (newTodoTitle: string) => {
-    const transformedTitle = transformTitle(newTodoTitle);
-
-    if (!transformedTitle) {
-      return;
-    }
-
-    if (todos.length >= 20) {
-      enqueueSnackbar("Max limit todos reached", {
-        variant: "warning",
-        preventDuplicate: true,
-      });
-      return;
-    }
-
-    const newTodo: SingleTodoType = {
-      id: Date.now(),
-      title: transformedTitle,
-      isDone: false,
-    };
-
-    setTodos((prev) => [newTodo, ...prev]);
-  };
-
-  const onCompletedHandler = (todoId: number) => {
-    setTodos((prev) => mapTodos(todoId, prev));
-  };
-
-  const clearTodosHandler = () => {
-    setTodos((prev) => prev.filter((todo) => !todo.isDone));
-  };
+  const isClearCompletedDisabled = !filteredTodos.length || !filteredTodos.some(todo => todo.isDone);
 
   const onFilterHandler = (tabKey: FilterTabsType) => {
     setActiveTab(tabKey);
@@ -76,23 +42,15 @@ const TodoList = (props: TodoListProps) => {
       </div>
 
       <div>
-        {filteredTodos.map((todo) => (
-          <SingleTodo
-            key={todo.id}
-            todo={todo}
-            onCompletedChange={onCompletedHandler}
-          />
+        {filteredTodos.map(todo => (
+          <SingleTodo key={todo.id} todo={todo} onCompletedChange={onCompletedHandler} />
         ))}
       </div>
+
       <div className="sticky bottom-0 bg-background flex flex-col sm:flex-row items-center justify-between text-muted font-thin py-1 px-2">
         <TodosLeftCount count={itemsLeftCount} />
-
         <TodosFilter activeTab={activeTab} onFilterCallback={onFilterHandler} />
-
-        <ClearCompletedTodos
-          clearTodos={clearTodosHandler}
-          disabled={isClearCompletedDisabled}
-        />
+        <ClearCompletedTodos clearTodos={clearTodosHandler} disabled={isClearCompletedDisabled} />
       </div>
     </div>
   );
